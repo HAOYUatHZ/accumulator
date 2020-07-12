@@ -3,6 +3,7 @@ use super::{ElemFrom, Group, UnknownOrderGroup};
 use crate::util::{int, TypeRep};
 use rug::Integer;
 use std::str::FromStr;
+// use std::cmp::Ordering;
 
 #[allow(clippy::module_name_repetitions)]
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
@@ -28,9 +29,15 @@ lazy_static! {
 }
 
 #[allow(clippy::module_name_repetitions)]
-#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 /// An RSA 2048 group element, directly wrapping a GMP integer from the `rug` crate.
 pub struct Rsa2048Elem(Integer);
+
+impl Rsa2048Elem {
+    pub fn get_integer(self) -> Integer {
+        self.0
+    }
+}
 
 impl TypeRep for Rsa2048 {
   type Rep = Integer;
